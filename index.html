@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8" />
+    <title>FONTYS CRUD</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://www.fontys.nl/upload/148163f8-4d2e-4701-8732-612f2982a602_00-LOGO-FONTYS-PAARS-OL-RGB.webp" type="image/png">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+
+</head>
+<body>
+
+<!-- Начален екран -->
+<div id="startScreen">
+    <img src="https://www.lightvehicle2025.eu/wp-content/uploads/2021/09/Fon525_200_RGB.png" alt="Logo">
+    <button onclick="enterApp()">Продължи</button>
+</div>
+
+<!-- Основно съдържание (скрито по начало) -->
+<div class="section" id="mainApp" style="display: none;">
+    <div class="logo-container">
+        <img src="https://www.lightvehicle2025.eu/wp-content/uploads/2021/09/Fon525_200_RGB.png"/>
+    </div>
+
+    <h1>Student Management System</h1>
+
+    <div style="text-align: center;">
+        <input id="facultyNumberInput" type="text" placeholder="Student ID" />
+        <input id="firstNameInput" type="text" placeholder="First Name" />
+        <input id="lastNameInput" type="text" placeholder="Surname" />
+        <input id="specialtyInput" type="text" placeholder="Speciality" />
+        <br />
+        <button onclick="createStudent()">Add Student</button>
+    </div>
+    <div class="table-wrapper">
+    <table id="studentTable">
+        <thead>
+        <tr>
+            <th>Student ID</th>
+            <th>First Name</th>
+            <th>Surname</th>
+            <th>Speciality</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody id="studentsBody"></tbody>
+    </table>
+    </div>
+</div>
+
+<script>
+    let students = [];
+
+   function enterApp() {
+    const startScreen = document.getElementById('startScreen');
+    const mainApp = document.getElementById('mainApp');
+
+    // Добавяме fade-out на началния екран
+    startScreen.classList.add('fade-out');
+
+    // Изчакваме края на анимацията (0.5s), преди да покажем основния екран
+    setTimeout(() => {
+        startScreen.style.display = 'none';
+        mainApp.style.display = 'block';
+        mainApp.classList.add('fade-in');
+    }, 500);
+}
+
+    function loadStudents() {
+        const stored = localStorage.getItem('students');
+        if (stored) {
+            students = JSON.parse(stored);
+        }
+    }
+
+    function saveStudents() {
+        localStorage.setItem('students', JSON.stringify(students));
+    }
+
+    function refreshTable() {
+        const tbody = document.getElementById('studentsBody');
+        const table = document.getElementById('studentTable');
+        tbody.innerHTML = '';
+
+        if (students.length === 0) {
+            table.style.display = 'none';
+            return;
+        }
+
+        table.style.display = 'table';
+
+        students.forEach(s => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${s.facultyNumber}</td>
+                <td>${s.firstName}</td>
+                <td>${s.lastName}</td>
+                <td>${s.specialty}</td>
+                <td>
+                    <button onclick="updateStudent('${s.facultyNumber}')">Редактирай</button>
+                    <button onclick="deleteStudent('${s.facultyNumber}')">Изтрий</button>
+                </td>`;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function createStudent() {
+        const facultyNumber = document.getElementById('facultyNumberInput').value.trim();
+        const firstName = document.getElementById('firstNameInput').value.trim();
+        const lastName = document.getElementById('lastNameInput').value.trim();
+        const specialty = document.getElementById('specialtyInput').value.trim();
+
+        if (!facultyNumber || !firstName || !lastName || !specialty) {
+            alert('Please, fill out all the fields');
+            return;
+        }
+
+        students.push({ facultyNumber, firstName, lastName, specialty });
+        saveStudents();
+        refreshTable();
+
+        document.getElementById('facultyNumberInput').value = '';
+        document.getElementById('firstNameInput').value = '';
+        document.getElementById('lastNameInput').value = '';
+        document.getElementById('specialtyInput').value = '';
+    }
+
+    function deleteStudent(facultyNumber) {
+        if (!confirm(`Сигурни ли сте, че искате да изтриете студент с ID ${facultyNumber}?`)) return;
+
+        students = students.filter(s => s.facultyNumber !== facultyNumber);
+        saveStudents();
+        refreshTable();
+        alert(`Изтрит: ${facultyNumber}`);
+    }
+
+    function updateStudent(facultyNumber) {
+        const firstName = prompt("Ново име:");
+        const lastName = prompt("Нова фамилия:");
+        const specialty = prompt("Нова специалност:");
+
+        if (!firstName || !lastName || !specialty) return;
+
+        const idx = students.findIndex(s => s.facultyNumber === facultyNumber);
+        if (idx > -1) {
+            students[idx] = { facultyNumber, firstName, lastName, specialty };
+            saveStudents();
+            refreshTable();
+            alert(`Обновен: ${facultyNumber}`);
+        }
+    }
+
+    // Зареждаме студенти при стартиране
+    loadStudents();
+    refreshTable();
+</script>
+</body>
+</html>
