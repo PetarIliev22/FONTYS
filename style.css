@@ -141,50 +141,29 @@
             background-color: #452145;
         }
 @media only screen and (max-width: 600px) {
-    body {
-    font-family: 'Poppins';
-        margin: 10px;
-        padding: 15px;
-        max-width: 100vw;
-        border-radius: 8px;
-        background: #663266;
-        color: #333;
-        font-size: 14px;
-        user-select: none;
-        animation: fadeIn 0.5s ease-in forwards;
-        overflow-x: hidden;
-        transform-origin: top center;
-        transform: scale(0.9);
-    }
+.section {
+    margin-top: 15%;
+    width: 350px;
+    max-width: 90vw;
+    border-radius: 10px;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 4px 8px 8px rgb(51 25 51 / 58%);
+    box-sizing: border-box;
 
-    .section {
-        padding: 18px;
-        border-radius: 10px;
-        box-shadow: 4px 8px 8px rgb(51 25 51 / 58%);
-        background-color: white;
-    }
+    /* Центриране вертикално */
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
 
-    .logo-container img {
-        max-width: 200px;
-        margin-bottom: 15px;
-    }
-
-    h1 {
-        font-size: 18px;
-        color: #663266;
+    /* Позиция по хоризонтала — примерно отстояние от ляво */
+    left: 20px;
+}
+  th, td {
+        padding: 12px 15px;
         text-align: center;
-    }
-
-    input[type="text"] {
-        width: 180px;
-        max-width: 100%;
-        padding: 8px 10px;
-        margin: 5px auto;
-        display: block;
-        font-size: 14px;
-        border-radius: 4px;
-        border: 1px solid #ccc;
-        box-shadow: inset 0 0 6px #d7d7d7;
+        font-weight: normal;
+        white-space: nowrap;
     }
 
     button {
@@ -204,7 +183,9 @@
     button:hover {
         background-color: #452145;
     }
-
+input[type="text"] {
+    width: 230px;
+}
     .table-wrapper {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
@@ -213,90 +194,5 @@
         box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
 
-    table {
-        display: table;
-        width: 100%;
-        border-collapse: collapse;
-        background: white;
-        border-radius: 6px;
-        box-shadow: 0 0 8px rgba(0,0,0,0.05);
-        animation: fadeIn 0.5s ease-in forwards;
-        overflow: visible;
-    }
 
-    th, td {
-        padding: 12px 15px;
-        text-align: center;
-        font-weight: normal;
-        white-space: nowrap;
-        color: #333;
-    }
-
-    thead {
-        background-color: #663266;
-        color: white;
-        position: sticky;
-        top: 0;
-        z-index: 10;
-    }
-
-    tbody tr:nth-child(even) {
-        background-color: #f9f9f9;
-    }
-
-    tbody tr:hover {
-        background-color: #f1f7ff;
-    }
-
-    td button {
-        background-color: #e74c3c;
-        margin-bottom: 20px;
-        padding: 6px 12px;
-        border-radius: 4px;
-        border: none;
-        color: white;
-        cursor: pointer;
-        font-size: 14px;
-    }
-
-    td button:first-child {
-        background-color: #27ae60;
-    }
-
-     #startScreen {
-        position: relative;
-        width: 100vw;
-        height: 100vh;
-        background-color: white;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        z-index: 999;
-        animation: fadeIn 0.5s ease-in-out;
-        transform-origin: center center;
-}
-
-        #startScreen img {
-            width: 160px;
-            height: auto;
-            margin-bottom: 20px;
-        }
-
-        #startScreen button {
-            padding: 12px 20px;
-            font-size: 16px;
-            width: 100%;
-            max-width: 240px;
-            border-radius: 6px;
-            background-color: #663266;
-            color: white;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        #startScreen button:hover {
-            background-color: #452145;
-        }
 }
